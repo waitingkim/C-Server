@@ -1,0 +1,32 @@
+{
+  "query": {
+    "attributes": "paymenttype, so_id",
+    "from": [
+      {
+        "attributes": "b.time, b.product_type, a.paymenttype, c.so_id",
+        "from": ["c7purchaselog","a"],
+        "include": [
+          {
+            "from": ["c3purchasedlog","b"],
+            "join": "inner",
+            "on": "a.purchasedid = b.id"
+          },
+          {
+            "attributes": [],
+            "from": ["settopboxcm","c"],
+            "join": "left outer",
+            "on": "on b.settop_id = c.id"
+          }
+        ]
+      },"d"
+    ],
+    "where": {
+      "operators": {
+        "and": {
+          "$cmp": ["time","20150101000000000"],
+          "$gt": ["time","20151230000000000"]
+        }
+      }
+    }
+  }
+}
